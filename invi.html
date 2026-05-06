@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seniors Farewell - Front Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, 
+                rgba(255, 182, 193, 0.3) 0%, 
+                rgba(221, 160, 221, 0.3) 25%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(173, 216, 230, 0.3) 75%, 
+                rgba(255, 255, 255, 0.2) 100%);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Animated Background Elements */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.6);
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bow {
+            position: absolute;
+            color: rgba(255, 192, 203, 0.7);
+            font-size: 25px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .star {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 18px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes heartsFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .college-name {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f72585);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .event-name {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 4rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .popup-btn {
+            background: linear-gradient(45deg, rgba(255,107,157,0.9), rgba(255,182,193,0.9));
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255,107,157,0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,107,157,0.6);
+        }
+
+        /* Page 2 Styles */
+        .page2 {
+            display: none;
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            background: linear-gradient(135deg, 
+                rgba(255, 182, 193, 0.25) 0%, 
+                rgba(221, 160, 221, 0.25) 50%, 
+                rgba(255, 255, 255, 0.15) 100%);
+            backdrop-filter: blur(15px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.3);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: #666;
+            cursor: pointer;
+            font-weight: 500;
+            z-index: 25;
+        }
+
+        .schedule-container {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 25;
+        }
+
+        .day-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b9d, #f72585);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .schedule-item {
+            background: rgba(255,255,255,0.6);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .time-venue {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .dress-code {
+            font-size: 1.1rem;
+            color: #e53e3e;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.5);
+            border-radius: 15px;
+            border-left: 5px solid #ff6b9d;
+        }
+
+        .surprise-section {
+            margin-top: 3rem;
+            padding: 2rem;
+        }
+
+        .surprise-btn {
+            background: linear-gradient(45deg, #ffd23f, #ffed4e);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 0 10px;
+            box-shadow: 0 10px 30px rgba(255,210,63,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .surprise-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255,210,63,0.6);
+        }
+
+        /* FIXED Final Message - Higher Z-Index */
+        .final-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ff6b9d, #f72585);
+            color: white;
+            padding: 4rem 3rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(255,107,157,0.5);
+            z-index: 1000 !important; /* Higher priority */
+            max-width: 400px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .final-message h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .final-message p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .final-message button {
+            margin-top: 2rem;
+            padding: 12px 30px;
+            background: white;
+            color: #ff6b9d;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .final-message button:hover {
+            background: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Hearts Explosion */
+        .hearts-explosion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .explosion-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1001;
+            font-size: 20px;
+            animation: heartsFloat 3s ease-out forwards;
+        }
+
+        @media (max-width: 768px) {
+            .college-name { font-size: 2.5rem; }
+            .event-name { font-size: 2rem; }
+            .day-title { font-size: 2rem; }
+            .schedule-container { padding: 2rem 1.5rem; }
+            .final-message { padding: 2.5rem 2rem; max-width: 90%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Decorations -->
+    <div class="bg-decoration" id="bgDecor"></div>
+
+    <!-- Page 1: Front Page -->
+    <div class="main-content">
+        <div class="college-name" id="collegeName"></div>
+        <div class="tagline">This is a GRAND EVENT</div>
+        <div class="event-name">SENIORS FAREWELL</div>
+        <button class="popup-btn" onclick="showPage2()">Oops! Press here for more fun ✨</button>
+    </div>
+
+    <!-- Page 2: Schedule -->
+    <div class="page2" id="page2">
+        <button class="back-btn" onclick="showPage1()">← Back</button>
+        <div class="schedule-container">
+            <h1 class="day-title">Event Schedule</h1>
+            
+            <div class="schedule-item">
+                <h2>🎉 DAY 1: FUN DAY</h2>
+                <div class="time-venue">📅 15th March 2024 | ⏰ 4:00 PM - 8:00 PM | 📍 College Auditorium</div>
+                <div class="dress-code">
+                    👕 Boys: Gen-Z Outfit (Streetwear/Casual Cool) <br>
+                    👗 Girls: Gen-Z Outfit (Trendy & Fun)
+                </div>
+            </div>
+
+            <div class="schedule-item">
+                <h2>🎓 DAY 2: CONVOCATION & FAREWELL</h2>
+                <div class="time-venue">📅 16th March 2024 | ⏰ 10:00 AM - 2:00 PM | 📍 Main Hall</div>
+                <div class="dress-code">
+                    👔 Boys: Formals (Suit/Blazer) <br>
+                    🥻 Girls: Saree (Traditional Elegance)
+                </div>
+            </div>
+
+            <div class="surprise-section">
+                <h2>🎁 A Cute Surprise is Here!</h2>
+                <p style="margin-bottom: 2rem; color: #666;">Wanna see it?</p>
+                <button class="surprise-btn" onclick="showSurprise()">Yes! 😍</button>
+                <button class="surprise-btn" onclick="showPersistentOptions()">No 🙅‍♀️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIXED Final Message -->
+    <div class="final-message" id="finalMessage">
+        <h2>💖 You're Invited! 💖</h2>
+        <p>
+            Dear Seniors, <br>
+            Your amazing college journey deserves the grandest farewell! <br>
+            Can't wait to celebrate YOU! ✨
+        </p>
+        <button onclick="heartsExplosion()">YAY! 🎉</button>
+    </div>
+
+    <!-- Hearts Explosion Container -->
+    <div class="hearts-explosion" id="heartsExplosion"></div>
+
+    <script>
+        // College name typing animation
+        const collegeName = "YOUR COLLEGE NAME";
+        const collegeNameEl = document.getElementById('collegeName');
+        let i = 0;
+        function typeCollegeName() {
+            if (i < collegeName.length) {
+                collegeNameEl.textContent += collegeName.charAt(i);
+                i++;
+                setTimeout(typeCollegeName, 200);
+            }
+        }
+        typeCollegeName();
+
+        // Create background decorations
+        function createDecorations() {
+            const bgDecor = document.getElementById('bgDecor');
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                bgDecor.appendChild(heart);
+
+                const bow = document.createElement('div');
+                bow.className = 'bow';
+                bow.innerHTML = '🎀';
+                bow.style.left = Math.random() * 100 + '%';
+                bow.style.top = Math.random() * 100 + '%';
+                bow.style.animationDelay = Math.random() * 8 + 's';
+                bgDecor.appendChild(bow);
+
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.innerHTML = '✨';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                bgDecor.appendChild(star);
+            }
+        }
+        createDecorations();
+
+        // Page navigation
+        function showPage2() {
+            document.querySelector('.main-content').style.display = 'none';
+            document.getElementById('page2').style.display = 'flex';
+        }
+
+        function showPage1() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'block';
+        }
+
+        // Persistent surprise options
+        function showPersistentOptions() {
+            const reallySure = confirm("Are you sure? 😜 There's something really cute waiting!");
+            if (!reallySure) {
+                showSurprise();
+                return;
+            }
+            
+            const lastChance = confirm("Last chance! Pretty please? 🥺");
+            if (!lastChance) {
+                showSurprise();
+                return;
+            }
+            
+            showSurprise();
+        }
+
+        // FIXED: Show Surprise Function
+        function showSurprise() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'block';
+        }
+
+        // FIXED: Hearts Explosion
+        function heartsExplosion() {
+            const explosion = document.getElementById('heartsExplosion');
+            explosion.innerHTML = ''; // Clear previous hearts
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'explosion-heart';
+                    heart.innerHTML = ['💖', '💕', '💗', '💝', '✨'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                    
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }, 3000);
+                }, i * 30);
+            }
+            
+            // Return to schedule page after explosion
+            setTimeout(() => {
+                document.getElementById('finalMessage').style.display = 'none';
+                document.getElementById('page2').style.display = 'flex';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
